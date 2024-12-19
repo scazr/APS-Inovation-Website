@@ -3,6 +3,7 @@ var fs = require('fs')
 
 console.log('çlkjasfçlkjasdf');
 console.log('çlijasdfçlksjaflskdf')
+console.log('lakjfaisjf')
 
 http.createServer(function (req, res) {
     fs.readFile('public/index.html', function(err, data) {
