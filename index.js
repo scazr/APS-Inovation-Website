@@ -1,14 +1,35 @@
-var http = require('http');
-var fs = require('fs')
+const express = require('express');
+const path = require('path');
 
-console.log('çlkjasfçlkjasdf');
-console.log('çlijasdfçlksjaflskdf')
-console.log('lakjfaisjf')
+const app = express();
+const publicPath = path.join(__dirname, 'public');
 
-http.createServer(function (req, res) {
-    fs.readFile('public/index.html', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        res.end();
-    });
-}).listen(8080);
+app.set('view engine', 'ejs');
+
+app.get('', function (_, res) {
+    res.sendFile(`${publicPath}/index.html`);
+});
+
+app.get('/about', function (_, res) {
+    const user = {
+        name:'Peter',
+        email:'peter@test.com',
+        country:'USA'
+    }
+
+    res.render('profile', user);
+});
+
+app.get('/about', function (_, res) {
+    res.sendFile(`${publicPath}/about.html`);
+});
+
+app.get('/help', function (_, res) {
+    res.sendFile(`${publicPath}/help.html`);
+});
+
+app.get('*', function (_, res) {
+    res.sendFile(`${publicPath}/notfound.html`);
+});
+
+app.listen(8080);
