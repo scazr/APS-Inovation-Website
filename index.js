@@ -1,35 +1,30 @@
 const express = require('express');
-const path = require('path');
-
+const con = require('./config');
 const app = express();
-const publicPath = path.join(__dirname, 'public');
 
-app.set('view engine', 'ejs');
+app.use(express.json());
 
-app.get('', function (_, res) {
-    res.sendFile(`${publicPath}/index.html`);
+app.get('/', function(req, res) {
+    con.query('select * from teste', function(err, result) {
+        if (err) {
+            res.send('error in api');
+        } else {
+            res.send(result);
+        }
+    })
 });
 
-app.get('/about', function (_, res) {
-    const user = {
-        name:'Peter',
-        email:'peter@test.com',
-        country:'USA'
+app.post('/', function (req, res) {
+    const data = {
+        name:'peter',
+        password:'5050',
+        user_type:'admin'
     }
-
-    res.render('profile', user);
-});
-
-app.get('/about', function (_, res) {
-    res.sendFile(`${publicPath}/about.html`);
-});
-
-app.get('/help', function (_, res) {
-    res.sendFile(`${publicPath}/help.html`);
-});
-
-app.get('*', function (_, res) {
-    res.sendFile(`${publicPath}/notfound.html`);
-});
+    
+    con.query('INSERT INTO teste SET?', req.body, function (err, result, fields) {
+        if (err) throw err;
+        res.send(result); 
+    })
+})
 
 app.listen(8080);
