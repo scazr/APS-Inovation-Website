@@ -179,13 +179,15 @@ body {
 
 /* Intern Section */
 .interns-display {
-    display: flex;
+    display: grid;
+    grid-template-columns:auto auto auto auto auto;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
     flex-wrap: wrap;
     max-width: fit-content;
     margin: auto;
+    width: max-content;
 }
 
 .intern-profile {
