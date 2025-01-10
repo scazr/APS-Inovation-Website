@@ -1,0 +1,36 @@
+/* Team Section */
+.team-section {
+}
+
+.team-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-display-grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 200px);
+    width: 90%;
+    gap: 20px;
+}
+
+.team-member {
+    border: 1px solid #ccc; /* Optional for styling */
+    border-radius: 10px; /* Optional for rounded corners */
+    padding: 10px; /* Optional for inner spacing */
+    background-color: #f9f9f9; /* Optional for card background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+    max-width: 240px;
+}
+
+.member-photo {
+    max-width: 100%;
+    border-radius: 15px;
+    aspect-ratio: 1 / 1;
+}
+
+.member-name {
+    margin: 0 0 
+}

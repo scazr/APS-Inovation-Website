@@ -1,0 +1,83 @@
+
+.navbar {
+    width: 100vw;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    right: 0;
+}
+
+.navbar > * {
+    align-self: center;
+    height: 100%;
+    border-radius: 0px 0px 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(230, 230, 230, 0.85);
+}
+
+.navbar-logo {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    height: 120%;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.navbar-separator {
+    margin: 1rem;
+}
+
+.btn-primary {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background-color: rgba(00, 134, 57, 1);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 10rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #434190;
+    outline: none;
+}
+
+.btn-primary:focus {
+    outline: 2px solid #fff;
+}
+
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        justify-content: flex-start; /* Align items at the top of the navbar */
+    }
+
+    .navbar-logo {
+        order: 2;
+        position: relative;
+        left: unset;
+        width: 150px;
+        margin-top: auto; /* Pushes the logo to the bottom */
+    }
+}
