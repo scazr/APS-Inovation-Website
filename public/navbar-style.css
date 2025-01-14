@@ -67,17 +67,53 @@
 }
 
 
-@media (max-width: 768px) {
+/* @media (max-width: 1080px) {
     .navbar {
         flex-direction: column;
-        justify-content: flex-start; /* Align items at the top of the navbar */
+        justify-content: flex-start;
     }
 
     .navbar-logo {
         order: 2;
         position: relative;
         left: unset;
-        width: 150px;
-        margin-top: auto; /* Pushes the logo to the bottom */
+        width: 90px;
+        margin-top: auto;
     }
+
+    .navbar > * {
+        align-self: center;
+        height: 100%;
+        border-radius: 0px 0px 15px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.30rem 0.75rem;
+        background-color: rgba(230, 230, 230, 0.85);
+    }
+    
+} */
+
+@media (max-width: 1080px) {
+    .navbar {
+    }
+
+    .navbar-logo {
+        order: 0;
+        position: relative;
+        bottom: auto;
+        width: 90px;
+    }
+
+    .navbar > * {
+        align-self: center;
+        height: 100%;
+        border-radius: 0px 0px 15px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.30rem 0.75rem;
+        background-color: rgba(230, 230, 230, 0.85);
+    }
+    
 }

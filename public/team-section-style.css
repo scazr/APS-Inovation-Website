@@ -11,26 +11,29 @@
 .team-display-grid {
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fill, 200px);
-    width: 90%;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    /* width: 90%; */
     gap: 20px;
 }
 
 .team-member {
-    border: 1px solid #ccc; /* Optional for styling */
-    border-radius: 10px; /* Optional for rounded corners */
-    padding: 10px; /* Optional for inner spacing */
-    background-color: #f9f9f9; /* Optional for card background */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
-    max-width: 240px;
+    border: 1px solid #ccc; /* Styling */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Inner spacing */
+    background-color: #f9f9f9; /* Card background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
 .member-photo {
-    max-width: 100%;
+    width: 100%;
     border-radius: 15px;
     aspect-ratio: 1 / 1;
 }
 
 .member-name {
-    margin: 0 0 
+    margin: 0 0;
+}
+
+.member-role {
+    margin: 0 0;
 }

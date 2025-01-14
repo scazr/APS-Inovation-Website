@@ -2,6 +2,7 @@
 .hero-section {
     background: url("./placeholderBackground.png") no-repeat center center/cover;
     height: 100vh;
+    min-height: fit-content;
     position: relative;
     color: #fff;
     margin: 0 calc(-1*var(--margin-left-right));
