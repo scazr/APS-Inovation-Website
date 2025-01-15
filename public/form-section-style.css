@@ -1,0 +1,108 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: url("./placeholderBackground.png") no-repeat center center/cover;
+    background-color: #f4f4f9;
+    color: #333;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.background-overlay {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+form input, form select, form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form .tel, form .tel > *{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+form .tel-margin {
+    width: 20px;
+}
+
+form .tel input {
+    max-width: fit-content;
+    width: 18ch;
+}
+
+form input[type="file"] {
+    padding: 5px;
+}
+
+form input[type="date"] {
+    color: #444;
+}
+
+form input:focus {
+    border-color: rgba(00, 134, 57, 1);
+    border-width: 3px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    form {
+        padding: 15px;
+    }
+    form label, form input, form button {
+        font-size: 14px;
+    }
+}

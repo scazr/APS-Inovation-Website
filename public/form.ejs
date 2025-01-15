@@ -5,37 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APS GPLO</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="form-section-style.css">
 
 </head>
 <body>
     <form action="/submit-form" method="post" enctype="multipart/form-data">
         <label for="name">Nome:</label>
         <input type="text" id="name" name="name" required/><br/><br/>
-    
+        
         <label for="email">E-mail:</label>
         <input type="email" id="email"/><br/><br/>
-
-        <label for="tel">Telefone</label>
-        <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" required/><br/><br/>
         
-        <label for="tel">2º Telefone</label>
-        <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX"/><br/><br/>
+        <div class="tel">
+            <div class="tel1">
+            <label for="tel">Telefone</label>
+            <div class="tel-margin"></div>
+            <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" required/><br/><br/>
+            </div>
 
+            <div class="tel2">
+            <label for="tel">2º Telefone</label>
+            <div class="tel-margin"></div>
+            <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX"/><br/><br/>
+            </div>
+        </div>
+        
         <label for="dob">Data de nascimento:</label>
         <input type="date" id="dob" min="<%= minDate %>" max="<%= curDate %>" required/><br/><br/>
         
         <label for="college">Faculdade cursada:</label>
         <input type="text" id="college" required/><br/><br/>
-
+        
         <label for="yearOfConclusion">Data da conclusão do curso:</label>
         <input type="date" id="yearOfConclusion" min="<%= curDate %>" max="<%= maxDate %>" required/><br/><br/>
-
+        
         <label for="resume">Seu currículo:</label>
         <input type="file" id="resume" required/><br/><br/>
     </form>
-    Hçlkjasdfçlkjsadfçlkjasdfçlkjasdflçkajsf
-    <footer>
-        
-    </footer>
+    <div class="background-overlay"></div>
+
 </body>
 </html>
