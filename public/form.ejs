@@ -10,37 +10,47 @@
 </head>
 <body>
     <form action="/submit-form" method="post" enctype="multipart/form-data">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required/><br/><br/>
+        <label for="name">Nome<span class="asterisk">*</span></label>
+        <input type="text" id="name" name="name" pattern="/^[a-zÀ-ÿ ,.'-]+$/i" title="Name can only contain letters, spaces, hyphens, and apostrophes." required/>
         
-        <label for="email">E-mail:</label>
-        <input type="email" id="email"/><br/><br/>
+        <label for="email">E-mail<span class="asterisk">*</span></label>
+        <input type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" required/>
         
-        <div class="tel">
-            <div class="tel1">
-            <label for="tel">Telefone</label>
-            <div class="tel-margin"></div>
-            <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" required/><br/><br/>
+        <div class="tel-fields">
+            <div class="tel-field">
+                <label for="tel">Telefone<span class="asterisk">*</span></label>
+                <div class="field-margin"></div>
+                <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" required/>
             </div>
 
-            <div class="tel2">
-            <label for="tel">2º Telefone</label>
-            <div class="tel-margin"></div>
-            <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX"/><br/><br/>
+            <div class="tel-field">
+                <label for="tel">2º Telefone</label>
+                <div class="field-margin"></div>
+                <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX"/>
             </div>
         </div>
         
-        <label for="dob">Data de nascimento:</label>
-        <input type="date" id="dob" min="<%= minDate %>" max="<%= curDate %>" required/><br/><br/>
+        <div class="date-fields">
+            <div class="date-field">
+                <label for="dob">Nascido em<span class="asterisk">*</span></label>
+                <div class="field-margin"></div>
+                <input type="date" id="dob" min="<%= minDate %>" max="<%= curDate %>" required/>
+            </div>
+            
+            <div class="date-field">
+                <label for="yearOfConclusion">Conclui curso em<span class="asterisk">*</span></label>
+                <div class="field-margin"></div>
+                <input type="date" id="yearOfConclusion" min="<%= curDate %>" max="<%= maxDate %>" required/>
+            </div>
+        </div>
+            
+        <label for="college">Faculdade cursada<span class="asterisk">*</span></label>
+        <input type="text" id="college" required/>
         
-        <label for="college">Faculdade cursada:</label>
-        <input type="text" id="college" required/><br/><br/>
         
-        <label for="yearOfConclusion">Data da conclusão do curso:</label>
-        <input type="date" id="yearOfConclusion" min="<%= curDate %>" max="<%= maxDate %>" required/><br/><br/>
-        
-        <label for="resume">Seu currículo:</label>
-        <input type="file" id="resume" required/><br/><br/>
+        <label class="resume" for="resume">Currículo (PDF)<span class="asterisk">*</span></label>
+        <input type="file" id="resume" name="resume" accept=".pdf" required/>
+        <button>Enviar</button>
     </form>
     <div class="background-overlay"></div>
 
