@@ -10,6 +10,25 @@
 </head>
 <body>
     <form action="/submit-form" method="post" enctype="multipart/form-data">
+        <fieldset class="gender-fieldset">
+            <legend>Selecione seu gênero<span class="asterisk">*</span></legend>
+            
+            <label for="gender-male" class="r"></label>
+            <span>Masculino</span>
+            <input type="radio" id="gender-male" name="gender" value="male" required/>
+            
+            <label for="gender-female" class="r">
+                <input type="radio" id="gender-female" name="gender" value="female" required/>
+                <span>Feminino</span>
+            </label>
+            
+            <label for="gender-other" class="r">
+                <input type="radio" id="gender-other" name="gender" value="other" required/>
+                <span>Outro</span>
+            </label>
+        </fieldset>
+
+
         <label for="name">Nome<span class="asterisk">*</span></label>
         <input type="text" id="name" name="name" pattern="/^[a-zÀ-ÿ ,.'-]+$/i" title="Name can only contain letters, spaces, hyphens, and apostrophes." required/>
         

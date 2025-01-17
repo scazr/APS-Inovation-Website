@@ -95,8 +95,8 @@
 } */
 
 @media (max-width: 1080px) {
-    .navbar {
-    }
+    /* .navbar {
+    } */
 
     .navbar-logo {
         order: 0;
