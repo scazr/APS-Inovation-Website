@@ -24,6 +24,65 @@ body {
 }
 
 form {
+    width: 1000px;
+}
+
+form .occupation-fieldset {
+    max-width: fit-content;
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+form .occupation-fieldset legend {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+/* Custom radio button styles */
+form .occupation-fieldset label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+form .occupation-fieldset label input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+form .occupation-fieldset label span {
+    max-width: 120px;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(240, 240, 240);
+    border: 2px solid #ccc;
+    border-radius: 4px; /* Makes the square edges slightly rounded */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+form .occupation-fieldset label input[type="radio"]:checked + span {
+    background-color: #4caf50; /* Green background for selected radio */
+    border-color: rgba(0, 134, 57, 1); /* Match the border color */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6); /* Subtle glow effect */
+}
+
+form .occupation-fieldset label span:hover {
+    background-color: #e0e0e0;
+}
+
+form .profile-field {
+    box-sizing: border-box;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -39,7 +98,9 @@ form label {
     color: #444;
 }
 
-form input, form select, form textarea {
+form .profile-field input,
+form .profile-field select,
+form .profile-field textarea {
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
@@ -49,23 +110,27 @@ form input, form select, form textarea {
     font-size: 16px;
 }
 
-form input:last-child {
+form .profile-field input:last-child {
     margin-bottom: 0;
 }
 
-form .tel-fields, form .date-fields, form .date-fields {
+form .profile-field .tel-fields,
+form .profile-field .date-fields,
+form .profile-field .date-fields {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-form .tel-field, form .date-field {
+form .tel-field,
+form .date-field {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0;
 }
 
-form .tel-field input, form .date-fields input {
+form .tel-field input,
+form .date-fields input {
     max-width: fit-content;
     width: 18ch;
 }
@@ -112,56 +177,8 @@ form button:hover {
     form {
         padding: 15px;
     }
-    form label, form input, form button {
+    form label,
+    form input, form button {
         font-size: 14px;
     }
-}
-
-.gender-fieldset {
-    border: none;
-    margin-bottom: 20px;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.gender-fieldset legend {
-    font-weight: bold;
-    margin-right: 20px;
-}
-
-/* Custom radio button styles */
-.r {
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 20%;
-}
-
-.custom-radio input[type="radio"] {
-    display: none; /* Hide the default radio button */
-}
-
-.custom-radio span {
-    display: inline-block;
-    height: 20px;
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
-    border-radius: 4px; /* Makes the square edges slightly rounded */
-    margin-right: 8px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.custom-radio input[type="radio"]:checked + span {
-    background-color: #4caf50; /* Green background for selected radio */
-    border-color: #4caf50; /* Match the border color */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6); /* Subtle glow effect */
-}
-
-.custom-radio span:hover {
-    background-color: #e0e0e0;
 }
