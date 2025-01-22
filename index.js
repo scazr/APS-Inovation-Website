@@ -1,12 +1,26 @@
+const multer = require('multer');
 const express = require('express');
 const app = express();
 
-const path = require('path');
+const path = require('path');   
 const publicPath = path.join(__dirname, 'public');
 const PORT = 8080; // Set localhost port
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(publicPath));
 app.set('view engine', 'ejs');
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function(req, file, cb) {
+            cb(null, 'uploads/');
+        },
+        filename: function(req, file, cb) {
+            cb(null, Date.now() + '-' + file.originalname)
+        },
+    }),
+}); 
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(publicPath, 'index.html'));
@@ -25,6 +39,25 @@ app.get('/form', function(req, res) {
     // console.log(formatDate(minDate))
     res.render(path.join(publicPath, 'form'), {minDate: formatDate(minDate), curDate: formatDate(curDate), maxDate: formatDate(maxDate)});
     // res.sendFile(path.join(publicPath, 'form.html'));
+});
+
+app.post('/submit-form', upload.single('resume'), (req, res) => {
+    const { name, email, occupation, college } = req.body;
+    const resume = req.file;
+
+    console.log('Form data:', JSON.stringify(req.body));
+    // console.log('Uploaded file:', resumeFile);
+
+    res.status(200).send({
+        message: 'Form submitted successfully!',
+        data: {
+          name,
+          email,
+          occupation,
+          college,
+          resume: resume.filename,
+        },
+    });
 });
 
 // Start server on http://localhost:<PORT>
