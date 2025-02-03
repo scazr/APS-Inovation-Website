@@ -10,53 +10,53 @@
 </head>
 <body>
     <form action="/submit-form" method="post" enctype="multipart/form-data">
-        <fieldset class="occupation-fieldset">
+        <fieldset class="occupation-fieldset" required>
             <!-- <legend>Selecione seu gênero<span class="asterisk">*</span></legend> -->
 
             <label for="developer">
-                <input type="radio" id="developer" name="occupation-option" value="developer" required/>
+                <input type="radio" id="developer" name="occupation-option" value="developer"/>
                 <span>Desenvolvedor</span>
             </label>
             
             <label for="data-scientist">
-                <input type="radio" id="data-scientist" name="occupation-option" value="data-scientist" required/>
+                <input type="radio" id="data-scientist" name="occupation-option" value="data-scientist"/>
                 <span>Cientista de Dados</span>
             </label>
             
             <label for="production-engineer">
-                <input type="radio" id="production-engineer" name="occupation-option" value="production-engineer" required/>
+                <input type="radio" id="production-engineer" name="occupation-option" value="production-engineer"/>
                 <span>Engenheiro de Produção</span>
             </label>
             
             <label for="marketing">
-                <input type="radio" id="marketing" name="occupation-option" value="marketing" required/>
+                <input type="radio" id="marketing" name="occupation-option" value="marketing"/>
                 <span>Marketing</span>
             </label>
             
             <label for="apprentice">
-                <input type="radio" id="apprentice" name="occupation-option" value="apprentice" required/>
+                <input type="radio" id="apprentice" name="occupation-option" value="apprentice"/>
                 <span>Aprendiz</span>
             </label>
         </fieldset>
 
         <div class="profile-field">
             <label for="name">Nome<span class="asterisk">*</span></label>
-            <input type="text" id="name" name="name" pattern="/^[a-zÀ-ÿ ,.'-]+$/i" title="Name can only contain letters, spaces, hyphens, and apostrophes." required/>
+            <input type="text" id="name" name="name" pattern="[a-zÀ-ÿ ,.'\-]+" title="Name can only contain letters, spaces, hyphens, and apostrophes." autocomplete="name" required/>
             
             <label for="email">E-mail<span class="asterisk">*</span></label>
-            <input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" required/>
+            <input type="email" id="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+" autocomplete="email" required/>
             
             <div class="tel-fields">
                 <div class="tel-field">
-                    <label for="tel">Telefone<span class="asterisk">*</span></label>
+                    <label for="primaryPhone">Telefone<span class="asterisk">*</span></label>
                     <div class="field-margin"></div>
-                    <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" required/>
+                    <input type="tel" id="primaryPhone" name="primaryPhone" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" autocomplete="tel" required/>
                 </div>
                 
                 <div class="tel-field">
-                    <label for="tel">2º Telefone</label>
+                    <label for="secondaryPhone">2º Telefone</label>
                     <div class="field-margin"></div>
-                    <input type="tel" id="tel" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX"/>
+                    <input type="tel" id="secondaryPhone" name="secondaryPhone" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" autocomplete="tel"/>
                 </div>
             </div>
             
@@ -86,4 +86,55 @@
     <div class="background-overlay"></div>
 
 </body>
+<script>
+    document.querySelector('form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        // const form = e.target;
+        const formData = new FormData(event.target);
+
+        try {
+            const response = await fetch('/submit-form', {
+                method: 'POST',
+                body: formData
+            });
+        
+
+            if (!response.ok) {
+                console.log('çlaksjdfaçlskjfdlkç')
+                const result = await response.json();
+                displayErrors(result.errors);
+            } else {
+                alert('Form submitted successfully!');
+                event.target.reset();
+            }
+        } catch (err) {
+            console.error('Error submitting the form:', err);
+        }
+    });
+
+    function displayErrors(errors) {
+        document.querySelectorAll('.error-message')
+
+        errors.forEach(error => {
+            const field = document.querySelector(`[name="${error.field}"]`);
+            if (field) {
+                const errorMessage = document.createElement('span');
+                errorMessage.classList.add('error-message');
+                errorMessage.style.color = 'red';
+                errorMessage.textContent = error.message;
+
+                field.parentNode.insertBefore(errorMessage, field.nextSibling);
+            }
+        });
+    }
+</script>
+<style>
+    .error-message {
+  font-size: 0.875em;
+  color: red;
+  margin-top: 5px;
+}
+
+</style>
 </html>

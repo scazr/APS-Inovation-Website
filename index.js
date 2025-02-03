@@ -1,4 +1,5 @@
 const multer = require('multer');
+const { body, validationResult } = require('express-validator');
 const express = require('express');
 const app = express();
 
@@ -41,24 +42,73 @@ app.get('/form', function(req, res) {
     // res.sendFile(path.join(publicPath, 'form.html'));
 });
 
-app.post('/submit-form', upload.single('resume'), (req, res) => {
-    const { name, email, occupation, college } = req.body;
-    const resume = req.file;
+app.post(
+    '/submit-form',
+    upload.single('resume'),
+    
+    [
+        body('name')
+            .trim()
+            .notEmpty()
+            .withMessage('Name is required.')
+            .matches(/^[a-zÀ-ÿ .'-]+$/i)
+            .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes.')
+            .matches(/.+ .+/)
+            .withMessage('Precisa conter nome e sobrenome'),
+        body('email')
+            .trim()
+            .isEmail()
+            .withMessage('Invalid email format'),
+        body('primaryPhone')
+            .notEmpty()
+            .withMessage('Primary phone is required')
+            .matches(/^\(\d{2}\) \d{4,5}-\d{4}$/)
+            .withMessage('Primary phone must follow the format (XX) XXXXX-XXXX.'),
+        body('occupation-option')
+            .notEmpty()
+            .withMessage('Occupation must be selected.'),
+    ],
+    
+    (req, res) => {
+        const errors = validationResult(req);
 
-    console.log('Form data:', JSON.stringify(req.body));
-    // console.log('Uploaded file:', resumeFile);
+        if (!errors.isEmpty()) {
+            console.log('ERROR:', errors);
+            console.log('error.param:', errors.param);
+            // Return validation errors
+            return res.status(400).json({
+                message: 'Validation errors occurred.',
+                errors: errors.array().map((error) => ({
+                    field: error.path,
+                    message: error.msg
+                })),
+            });
+        }
 
-    res.status(200).send({
-        message: 'Form submitted successfully!',
-        data: {
-          name,
-          email,
-          occupation,
-          college,
-          resume: resume.filename,
-        },
-    });
-});
+        const { name, occupation, college, email, primaryPhone, secondaryPhone } = req.body;
+        const resume = req.file;
+
+        if (!resume) {
+            return res.status(400).send({ message: 'Resume file is required.' });
+        }
+
+        console.log('Form data:', JSON.stringify(req.body));
+        // console.log('Uploaded file:', resumeFile);
+
+        res.status(200).send({
+            message: 'Form submitted successfully!',
+            data: {
+            name,
+            occupation,
+            college,
+            email,
+            primaryPhone,
+            secondaryPhone,
+            resume: resume.filename,
+            },
+        });
+    }
+);
 
 // Start server on http://localhost:<PORT>
 app.listen(PORT, function() {
