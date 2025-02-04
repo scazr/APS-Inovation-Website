@@ -41,22 +41,22 @@
 
         <div class="profile-field">
             <label for="name">Nome<span class="asterisk">*</span></label>
-            <input type="text" id="name" name="name" pattern="[a-zÀ-ÿ ,.'\-]+" title="Name can only contain letters, spaces, hyphens, and apostrophes." autocomplete="name" required/>
+            <input type="text" id="name" name="name"/>
             
             <label for="email">E-mail<span class="asterisk">*</span></label>
-            <input type="email" id="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+" autocomplete="email" required/>
+            <input type="email" id="email" name="email"/>
             
             <div class="tel-fields">
                 <div class="tel-field">
                     <label for="primaryPhone">Telefone<span class="asterisk">*</span></label>
                     <div class="field-margin"></div>
-                    <input type="tel" id="primaryPhone" name="primaryPhone" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" autocomplete="tel" required/>
+                    <input type="tel" id="primaryPhone" name="primaryPhone"/>
                 </div>
                 
                 <div class="tel-field">
                     <label for="secondaryPhone">2º Telefone</label>
                     <div class="field-margin"></div>
-                    <input type="tel" id="secondaryPhone" name="secondaryPhone" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXX-XXXX" autocomplete="tel"/>
+                    <input type="tel" id="secondaryPhone" name="secondaryPhone"/>
                 </div>
             </div>
             
@@ -64,22 +64,22 @@
                 <div class="date-field">
                     <label for="dob">Nascido em<span class="asterisk">*</span></label>
                     <div class="field-margin"></div>
-                    <input type="date" id="dob" min="<%= minDate %>" max="<%= curDate %>" required/>
+                    <input type="date" id="dob"/>
                 </div>
                 
                 <div class="date-field">
                     <label for="yearOfConclusion">Conclui curso em<span class="asterisk">*</span></label>
                     <div class="field-margin"></div>
-                    <input type="date" id="yearOfConclusion" min="<%= curDate %>" max="<%= maxDate %>" required/>
+                    <input type="date" id="yearOfConclusion"/>
                 </div>
             </div>
             
             <label for="college">Faculdade cursada<span class="asterisk">*</span></label>
-            <input type="text" id="college" required/>
-            
+            <input type="text" id="college" name="college"/>
             
             <label class="resume" for="resume">Currículo (PDF)<span class="asterisk">*</span></label>
-            <input type="file" id="resume" name="resume" accept=".pdf" required/>
+            <input type="file" id="resume" name="resume"/>
+
             <button type="submit">Enviar</button>
         </div>
     </form>

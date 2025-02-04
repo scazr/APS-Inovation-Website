@@ -44,34 +44,62 @@ app.get('/form', function(req, res) {
 
 app.post(
     '/submit-form',
-    upload.single('resume'),
+    upload.single('resume'),    
     
     [
         body('name')
             .trim()
             .notEmpty()
-            .withMessage('Name is required.')
+            .withMessage('Nome é necessário.')
+            .bail()
+            .isLength({ max: 100 })
+            .withMessage('Nome não pode exceder 100 caracteres.')
+            .bail()
             .matches(/^[a-zÀ-ÿ .'-]+$/i)
-            .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes.')
-            .matches(/.+ .+/)
+            .withMessage('Nome pode conter apenas letras, espaços, hífens e apostrofes.')
+            .bail()
+            .matches(/\s+/)
             .withMessage('Precisa conter nome e sobrenome'),
         body('email')
             .trim()
-            .isEmail()
-            .withMessage('Invalid email format'),
+            .isEmail({ require_tld: false })
+            .withMessage('E-mail deve ser um formato válido.')
+            .bail()
+            .isLength({ max: 254 })
+            .withMessage('E-mail não pode exceder 254 caracteres.'),
         body('primaryPhone')
             .notEmpty()
-            .withMessage('Primary phone is required')
+            .withMessage('Ao menos um telefone é necessário.')
+            .bail()
+            .isLength({ max: 50 })
+            .withMessage('Telefone não pode exceder 50 caracteres.')
+            .bail()
             .matches(/^\(\d{2}\) \d{4,5}-\d{4}$/)
-            .withMessage('Primary phone must follow the format (XX) XXXXX-XXXX.'),
+            .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.'),
+        body('secondaryPhone')
+            .isLength({ max: 50 })
+            .withMessage('Telefone não pode exceder 50 caracteres.')
+            .bail()
+            .matches(/^(\(\d{2}\) \d{4,5}-\d{4})?$/)
+            .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.'),
         body('occupation-option')
             .notEmpty()
-            .withMessage('Occupation must be selected.'),
+            .withMessage('Uma ocupação deve ser selecionada.'),
+        body('college')
+            .trim()
+            .notEmpty()
+            .withMessage('Precisa conter uma faculdade em curso.')
+            .bail()
+            .isLength({ max: 150 })
+            .withMessage('Nome da faculdade não pode exceder 150 caractéres.')
+            .bail()
+            .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i)
+            .withMessage('Nome da faculdade pode conter apenas letras, espaços, hífens e apostrofes.'),
+            
     ],
-    
     (req, res) => {
         const errors = validationResult(req);
-
+        
         if (!errors.isEmpty()) {
             console.log('ERROR:', errors);
             console.log('error.param:', errors.param);
@@ -89,7 +117,11 @@ app.post(
         const resume = req.file;
 
         if (!resume) {
-            return res.status(400).send({ message: 'Resume file is required.' });
+            return res.status(400).send({ message: 'Um currículo deve ser anexado.' });
+        }
+        
+        if (req.file && req.file.size > 5 * 1024 * 1024) {
+            return res.status(400).json({ message: 'O currículo deve ter um tamanho máximo de 5MB.' })
         }
 
         console.log('Form data:', JSON.stringify(req.body));
