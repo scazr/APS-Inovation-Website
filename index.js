@@ -42,6 +42,8 @@ app.get('/form', function(req, res) {
     // res.sendFile(path.join(publicPath, 'form.html'));
 });
 
+const parsePhoneNumberFromString = require('libphonenumber-js');
+const dayjs = require('dayjs');
 app.post(
     '/submit-form',
     upload.single('resume'),    
@@ -74,14 +76,64 @@ app.post(
             .isLength({ max: 50 })
             .withMessage('Telefone não pode exceder 50 caracteres.')
             .bail()
-            .matches(/^\(\d{2}\) \d{4,5}-\d{4}$/)
-            .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.'),
+            .custom(value => {
+                const phone = parsePhoneNumberFromString(value, 'BR');
+                if (!phone || !phone.isValid()) {
+                    throw new Error('Telefone inválido');
+                }
+                return true;
+            })
+            // .bail()
+            // .matches(/^\(\d{2}\) \d{4,5}-\d{4}$/)
+            // .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.')
+            ,
         body('secondaryPhone')
             .isLength({ max: 50 })
             .withMessage('Telefone não pode exceder 50 caracteres.')
             .bail()
             .matches(/^(\(\d{2}\) \d{4,5}-\d{4})?$/)
             .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.'),
+        body('dateOfBirth')
+            .isISO8601()
+            .withMessage('Data deve estar em um formato correto.')
+            .bail()
+            .custom(value => {
+                const dob = dayjs(value, 'YYYY-MM-DD', true);
+                const minAge = dayjs().subtract(14, 'year');
+                const maxAge = dayjs().subtract(60, 'year');
+
+                if (dob.isAfter(minAge)) {
+                    throw new Error('Idade mínima insuficiente.');
+                }
+                if (dob.isBefore(maxAge)) {
+                    throw new Error('A idade máxima atingida.')
+                }
+                return true;
+            })
+        ,
+        body('yearOfConclusion')
+            .notEmpty()
+            .withMessage('Ano de conclusão é obrigatório.')
+            .bail()
+            .isISO8601()
+            .withMessage('Data deve estar no formato correto.')
+            .bail()
+            .custom(value => {
+                const conclusionDate = dayjs(value, 'YYYY-MM-DD', true); // Strict parsing
+                const currentDate = dayjs(); // Today's date
+                const maxDate = currentDate.add(5, 'year'); // 5 years from now
+
+                if (!conclusionDate.isValid()) {
+                    throw new Error('Formato de data inválido.');
+                }
+                if (conclusionDate.isBefore(currentDate, 'day')) {
+                    throw new Error('O ano de conclusão deve ser no futuro.');
+                }
+                if (conclusionDate.isAfter(maxDate, 'day')) {
+                    throw new Error('O ano de conclusão deve estar dentro dos próximos 5 anos.');
+                }
+                return true;
+        }),
         body('occupation-option')
             .notEmpty()
             .withMessage('Uma ocupação deve ser selecionada.'),
@@ -94,7 +146,7 @@ app.post(
             .withMessage('Nome da faculdade não pode exceder 150 caractéres.')
             .bail()
             .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i)
-            .withMessage('Nome da faculdade pode conter apenas letras, espaços, hífens e apostrofes.'),
+            .withMessage('Nome da faculdade pode conter apenas letras, números, espaços, hífens e apostrofes.'),
             
     ],
     (req, res) => {
