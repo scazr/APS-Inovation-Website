@@ -98,11 +98,10 @@
                 method: 'POST',
                 body: formData
             });
-        
 
             if (!response.ok) {
-                console.log('çlaksjdfaçlskjfdlkç')
                 const result = await response.json();
+                alert(JSON.stringify(result.errors));
                 displayErrors(result.errors);
             } else {
                 alert('Form submitted successfully!');

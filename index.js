@@ -42,119 +42,127 @@ app.get('/form', function(req, res) {
     // res.sendFile(path.join(publicPath, 'form.html'));
 });
 
+const rateLimit = require('express-rate-limit');
+
+const formLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 1,
+    message: { error: "Too many form submissions, please try again later." },
+    header: true,
+})
 const parsePhoneNumberFromString = require('libphonenumber-js');
 const dayjs = require('dayjs');
+const { error } = require('console');
 app.post(
     '/submit-form',
+    formLimiter,
     upload.single('resume'),    
     
     [
         body('name')
             .trim()
-            .notEmpty()
-            .withMessage('Nome é necessário.')
+            .notEmpty().withMessage('Nome é necessário.')
             .bail()
-            .isLength({ max: 100 })
-            .withMessage('Nome não pode exceder 100 caracteres.')
+            .isLength({ max: 100 }).withMessage('Nome não pode exceder 100 caracteres.')
             .bail()
-            .matches(/^[a-zÀ-ÿ .'-]+$/i)
-            .withMessage('Nome pode conter apenas letras, espaços, hífens e apostrofes.')
+            .matches(/^[a-zÀ-ÿ .'-]+$/i).withMessage('Nome pode conter apenas letras, espaços, hífens e apostrofes.')
             .bail()
-            .matches(/\s+/)
-            .withMessage('Precisa conter nome e sobrenome'),
+            .matches(/\s+/).withMessage('Precisa conter nome e sobrenome'),
         body('email')
             .trim()
-            .isEmail({ require_tld: false })
-            .withMessage('E-mail deve ser um formato válido.')
+            .notEmpty().withMessage('E-mail é necessário.')
+            .isEmail({ require_tld: false }).withMessage('E-mail deve ser um formato válido.')
             .bail()
-            .isLength({ max: 254 })
-            .withMessage('E-mail não pode exceder 254 caracteres.'),
+            .isLength({ max: 254 }).withMessage('E-mail não pode exceder 254 caracteres.'),
         body('primaryPhone')
-            .notEmpty()
-            .withMessage('Ao menos um telefone é necessário.')
-            .bail()
-            .isLength({ max: 50 })
-            .withMessage('Telefone não pode exceder 50 caracteres.')
-            .bail()
-            .custom(value => {
-                const phone = parsePhoneNumberFromString(value, 'BR');
-                if (!phone || !phone.isValid()) {
-                    throw new Error('Telefone inválido');
-                }
+            .custom((value, { req }) => {
+                if (!value && !req.body.secondaryPhone) throw new Error('Ao menos um telefone deve ser informado.');
+                
                 return true;
             })
+            .bail()
+            .custom(value => {
+                if (value === '') return true;
+
+                const phone = parsePhoneNumberFromString(value, 'BR');
+                if (!phone || !phone.isValid()) throw new Error('Telefone inválido');
+                
+                return true;
+            })
+            .bail()
+            .isLength({ max: 50 }).withMessage('Telefone não pode exceder 50 caracteres.')
             // .bail()
             // .matches(/^\(\d{2}\) \d{4,5}-\d{4}$/)
             // .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.')
             ,
         body('secondaryPhone')
-            .isLength({ max: 50 })
-            .withMessage('Telefone não pode exceder 50 caracteres.')
+            .custom((value, { req }) => {
+                if (!value && !req.body.primaryPhone) throw new Error('Ao menos um telefone deve ser informado.');
+                
+                return true;
+            })
             .bail()
-            .matches(/^(\(\d{2}\) \d{4,5}-\d{4})?$/)
-            .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.'),
+            .custom(value => {
+                if (value === '') return true;
+
+                const phone = parsePhoneNumberFromString(value, 'BR');
+                if (!phone || !phone.isValid()) throw new Error('Telefone inválido');
+                
+                return true;
+            })
+            .bail()
+            .isLength({ max: 50 }).withMessage('Telefone não pode exceder 50 caracteres.')
+            // .bail()
+            // .matches(/^(\(\d{2}\) \d{4,5}-\d{4})?$/)
+            // .withMessage('Telefone deve seguir o formato (XX) XXXXX-XXXX.')
+            ,
         body('dateOfBirth')
-            .isISO8601()
-            .withMessage('Data deve estar em um formato correto.')
+            .isISO8601().withMessage('Data deve estar em um formato correto.')
             .bail()
             .custom(value => {
                 const dob = dayjs(value, 'YYYY-MM-DD', true);
                 const minAge = dayjs().subtract(14, 'year');
                 const maxAge = dayjs().subtract(60, 'year');
 
-                if (dob.isAfter(minAge)) {
-                    throw new Error('Idade mínima insuficiente.');
-                }
-                if (dob.isBefore(maxAge)) {
-                    throw new Error('A idade máxima atingida.')
-                }
+                if (dob.isAfter(minAge)) throw new Error('Idade mínima insuficiente.');
+                if (dob.isBefore(maxAge)) throw new Error('A idade máxima atingida.');
+                
                 return true;
             })
         ,
         body('yearOfConclusion')
-            .notEmpty()
-            .withMessage('Ano de conclusão é obrigatório.')
+            .notEmpty().withMessage('Ano de conclusão é obrigatório.')
             .bail()
-            .isISO8601()
-            .withMessage('Data deve estar no formato correto.')
+            .isISO8601().withMessage('Data deve estar no formato correto.')
             .bail()
             .custom(value => {
                 const conclusionDate = dayjs(value, 'YYYY-MM-DD', true); // Strict parsing
                 const currentDate = dayjs(); // Today's date
                 const maxDate = currentDate.add(5, 'year'); // 5 years from now
 
-                if (!conclusionDate.isValid()) {
-                    throw new Error('Formato de data inválido.');
-                }
-                if (conclusionDate.isBefore(currentDate, 'day')) {
-                    throw new Error('O ano de conclusão deve ser no futuro.');
-                }
-                if (conclusionDate.isAfter(maxDate, 'day')) {
-                    throw new Error('O ano de conclusão deve estar dentro dos próximos 5 anos.');
-                }
+                if (!conclusionDate.isValid()) throw new Error('Formato de data inválido.');
+                if (conclusionDate.isBefore(currentDate, 'day')) throw new Error('O ano de conclusão deve ser no futuro.');
+                if (conclusionDate.isAfter(maxDate, 'day')) throw new Error('O ano de conclusão deve estar dentro dos próximos 5 anos.');
+                
                 return true;
-        }),
+            }),
         body('occupation-option')
-            .notEmpty()
-            .withMessage('Uma ocupação deve ser selecionada.'),
+            .notEmpty().withMessage('Uma ocupação deve ser selecionada.'),
         body('college')
             .trim()
-            .notEmpty()
-            .withMessage('Precisa conter uma faculdade em curso.')
+            .notEmpty().withMessage('Precisa conter uma faculdade em curso.')
             .bail()
-            .isLength({ max: 150 })
-            .withMessage('Nome da faculdade não pode exceder 150 caractéres.')
+            .isLength({ max: 150 }).withMessage('Nome da faculdade não pode exceder 150 caractéres.')
             .bail()
-            .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i)
-            .withMessage('Nome da faculdade pode conter apenas letras, números, espaços, hífens e apostrofes.'),
+            .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i).withMessage('Nome da faculdade pode conter apenas letras, números, espaços, hífens e apostrofes.'),
             
     ],
     (req, res) => {
         const errors = validationResult(req);
         
         if (!errors.isEmpty()) {
-            console.log('ERROR:', errors);
-            console.log('error.param:', errors.param);
+            // console.log('ERROR:', errors);
+            // console.log('error.param:', errors.param);
             // Return validation errors
             return res.status(400).json({
                 message: 'Validation errors occurred.',
@@ -176,7 +184,7 @@ app.post(
             return res.status(400).json({ message: 'O currículo deve ter um tamanho máximo de 5MB.' })
         }
 
-        console.log('Form data:', JSON.stringify(req.body));
+        // console.log('Form data:', JSON.stringify(req.body));
         // console.log('Uploaded file:', resumeFile);
 
         res.status(200).send({
