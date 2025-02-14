@@ -37,22 +37,21 @@ app.get('/form', function(req, res) {
     
     const formatDate = (date) => date.toISOString().split('T')[0];
     
-    // console.log(formatDate(minDate))
     res.render(path.join(publicPath, 'form'), {minDate: formatDate(minDate), curDate: formatDate(curDate), maxDate: formatDate(maxDate)});
-    // res.sendFile(path.join(publicPath, 'form.html'));
 });
 
 const rateLimit = require('express-rate-limit');
 
 const formLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 1,
-    message: { error: "Too many form submissions, please try again later." },
+    max: 100,
+    message: { error: "Muitas submissões já realizadas. Tente novamente mais tarde." },
     header: true,
 })
 const parsePhoneNumberFromString = require('libphonenumber-js');
 const dayjs = require('dayjs');
 const { error } = require('console');
+const { cache } = require('ejs');
 app.post(
     '/submit-form',
     formLimiter,
@@ -62,15 +61,13 @@ app.post(
         body('name')
             .trim()
             .notEmpty().withMessage('Nome é necessário.')
-            .bail()
             .isLength({ max: 100 }).withMessage('Nome não pode exceder 100 caracteres.')
-            .bail()
-            .matches(/^[a-zÀ-ÿ .'-]+$/i).withMessage('Nome pode conter apenas letras, espaços, hífens e apostrofes.')
-            .bail()
+            .matches(/^[a-zÀ-ÿ .'-]+$/i).withMessage('Nome deve conter apenas letras, espaços, hífens e apostrofes.')
             .matches(/\s+/).withMessage('Precisa conter nome e sobrenome'),
         body('email')
             .trim()
             .notEmpty().withMessage('E-mail é necessário.')
+            .bail()
             .isEmail({ require_tld: false }).withMessage('E-mail deve ser um formato válido.')
             .bail()
             .isLength({ max: 254 }).withMessage('E-mail não pode exceder 254 caracteres.'),
@@ -154,35 +151,58 @@ app.post(
             .bail()
             .isLength({ max: 150 }).withMessage('Nome da faculdade não pode exceder 150 caractéres.')
             .bail()
-            .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i).withMessage('Nome da faculdade pode conter apenas letras, números, espaços, hífens e apostrofes.'),
-            
+            .matches(/^[a-zÀ-ÿ0-9 .'\-&]+$/i).withMessage('Nome da faculdade deve conter apenas letras, números, espaços, hífens e apostrofes.'),
+        body('resume')
+            .custom((value, { req }) => {
+                if (!req.file) throw new Error('Um currículo deve ser anexado.');
+                return true;
+            })
+            .bail()
+            .custom((value, { req }) => {
+                if (!req.file.size > 5 * 1024 * 1024) throw new Error('O currículo deve ter um tamanho máximo de 5MB.');
+                return true;
+            })
+            .bail()
+            .custom((value, { req }) => {
+                const allowedMimeTypes = ['application/pdf'];
+                if (!allowedMimeTypes.includes(req.file.mimetype)) throw new Error('O currículo deve estar no formato PDF.');
+
+                return true;
+            }),            
     ],
     (req, res) => {
         const errors = validationResult(req);
+        // const errorsArray = errors.array();
         
-        if (!errors.isEmpty()) {
-            // console.log('ERROR:', errors);
-            // console.log('error.param:', errors.param);
-            // Return validation errors
-            return res.status(400).json({
-                message: 'Validation errors occurred.',
-                errors: errors.array().map((error) => ({
-                    field: error.path,
-                    message: error.msg
-                })),
-            });
-        }
+        // if (!resume) {
+            //     errorsArray.push({
+                //         type: 'field',
+                //         value: '',
+                //         msg: 'Um currículo deve ser anexado.',
+                //         path: 'resume',
+                //         location: 'body',
+                //     });
+                // } 
 
+                if (!errors.isEmpty()) {
+                    // console.log('ERRORS:', errors.array());
+
+                    // console.log('error.param:', errors.param);
+                    // Return validation errors
+            
+                    return res.status(400).json({
+                        message: 'Validation errors occurred.',
+                        errors: errors.array().map((error) => ({
+                            field: error.path,
+                            message: error.msg
+                        })),
+                    });
+
+            
+                }
+                
         const { name, occupation, college, email, primaryPhone, secondaryPhone } = req.body;
         const resume = req.file;
-
-        if (!resume) {
-            return res.status(400).send({ message: 'Um currículo deve ser anexado.' });
-        }
-        
-        if (req.file && req.file.size > 5 * 1024 * 1024) {
-            return res.status(400).json({ message: 'O currículo deve ter um tamanho máximo de 5MB.' })
-        }
 
         // console.log('Form data:', JSON.stringify(req.body));
         // console.log('Uploaded file:', resumeFile);
@@ -206,3 +226,5 @@ app.post(
 app.listen(PORT, function() {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+console.log('lkajsfd');
