@@ -37,11 +37,6 @@ form .occupation-fieldset {
     display: flex;
     justify-content: center;
 }
-
-/* form .occupation-fieldset legend {
-    font-weight: bold;
-    margin-right: 20px;
-} */
     
 /* Custom radio button styles */
 form .occupation-fieldset label {
@@ -68,7 +63,6 @@ form .occupation-fieldset label span {
     box-sizing: border-box;
     height: 100%;
     display: flex;
-    /* justify-content: center; */
     align-items: center;    
 }
 
@@ -82,6 +76,7 @@ form .occupation-fieldset label span:hover {
     background-color: #e0e0e0;
 }
 
+
 form .profile-field {
     box-sizing: border-box;
     width: 100%;
@@ -93,71 +88,51 @@ form .profile-field {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
 }
 
+form .profile-field .field-line {
+    margin-bottom: 20px;
+}
+
 form label {
     font-weight: bold;
     color: #444;
-    margin-bottom: 20px;
     display: block;
 }
 
-form .secondary-phone {
-    margin-left: auto;
-    justify-content: space-between;
-    left: auto;
-    background-color: #4caf50;
-    
-}   
+form .profile-field p {
+    margin: 0
+}
 
-form .profile-field input,
-form .profile-field select,
-form .profile-field textarea {
+form .profile-field input {
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    /* margin-bottom: 20px; */
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
-form .profile-field input:last-child {
-    margin-bottom: 0;
-}
-
 form .profile-field .tel-fields,
-form .profile-field .date-fields,
 form .profile-field .date-fields {
     display: flex;
     justify-content: space-between;
-    /* margin-bottom: 20px; */
+    align-items: center;
+    width: 100%;
 }
 
-form .tel-field,
-form .date-field {
+form .profile-field .date-fields {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0;
 }
 
-form .tel-field input,
-form .date-fields input {
-    max-width: fit-content;
+form input[type="tel"],
+form input[type="date"] {
     width: 18ch;
 }
-
-form .field-margin {
-    width: 18px;
-}
-
-form .date
 
 form input[type="file"] {
     padding: 5px;
 }
 
-form input[type="date"] {
-    color: #444;
-}
 
 form input:focus {
     border-color: rgba(0, 134, 57, 1);
@@ -181,6 +156,7 @@ form button {
 form button:hover {
     background-color: rgba(0, 104, 27, 1);
 }
+
 
 /* Mobile Responsiveness */
 @media (max-width: 600px) {

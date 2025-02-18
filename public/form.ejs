@@ -40,55 +40,44 @@
         </fieldset>
 
         <div class="profile-field">
-            <label for="name">Nome<span class="asterisk">*</span>
+            <label class="field-line" for="name">Nome<span class="asterisk">*</span>
                 <input type="text" id="name" name="name"/>
             </label>
             
-            <label for="email">E-mail<span class="asterisk">*</span>
+            <label class="field-line" for="email">E-mail<span class="asterisk">*</span>
                 <input type="email" id="email" name="email"/>
             </label>
             
-            <div class="tel-fields">
-                <div class="tel-field">
-                    <label for="primaryPhone">
-                        Telefone<span class="asterisk">*</span>
-                        <div class="field-margin"></div>
-                        <input type="tel" id="primaryPhone" name="primaryPhone"/>
-                    </label>
-                </div>
+            <div class="field-line tel-fields">
+                <label for="primaryPhone">
+                    <p>Telefone<span class="asterisk">*</span></p>
+                    <input type="tel" id="primaryPhone" name="primaryPhone"/>
+                </label>
                 
-                <div class="tel-field secondary-phone">
-                    <label for="secondaryPhone">
-                        2º Telefone
-                        <div class="field-margin"></div>
-                        <input type="tel" id="secondaryPhone" name="secondaryPhone"/>
-                    </label>
-                </div>
+                <label for="secondaryPhone">
+                    <p>2º Telefone</p>
+                    <input type="tel" id="secondaryPhone" name="secondaryPhone"/>
+                </label>
             </div>
             
-            <div class="date-fields">
-                <div class="date-field">
-                    <label for="dateOfBirth">
-                        Nascido em<span class="asterisk">*</span>
-                        <div class="field-margin"></div>
-                        <input type="date" id="dateOfBirth" name="dateOfBirth"/>
-                    </label>
-                </div>
+            <div class="field-line date-fields">
+                <label for="dateOfBirth">
+                    <p>Nascido em<span class="asterisk">*</span></p>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth"/>
+                </label>
                 
-                <div class="date-field">
-                    <label for="yearOfConclusion">
-                        Conclui curso em<span class="asterisk">*</span>
-                        <div class="field-margin"></div>
-                        <input type="date" id="yearOfConclusion" name="yearOfConclusion"/>
-                    </label>
-                </div> 
+                <label for="yearOfConclusion">
+                    <p>Conclui curso em<span class="asterisk">*</span></p>
+                    <div class="field-margin"></div>
+                    <input type="date" id="yearOfConclusion" name="yearOfConclusion"/>
+                </label>
             </div>
             
-            <label for="college">Faculdade cursada<span class="asterisk">*</span>
+            <label class="field-line" for="college">Faculdade cursada<span class="asterisk">*</span>
                 <input type="text" id="college" name="college"/>
             </label>
             
-            <label class="resume" for="resume">Currículo (PDF)<span class="asterisk">*</span>
+            <label class="field-line resume" for="resume">Currículo (PDF)<span class="asterisk">*</span>
                 <input type="file" id="resume" name="resume"/>
             </label>
 
