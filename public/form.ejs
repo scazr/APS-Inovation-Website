@@ -6,64 +6,50 @@
     <title>APS GPLO</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="form-section-style.css">
+    <!-- <link rel="stylesheet" href="form-section-occu pation-style.css"> -->
+    <link rel="stylesheet" href="form-section-profile-style.css">
 
 </head>
 <body>
     <form action="/submit-form" method="post" enctype="multipart/form-data">
-        <fieldset class="occupation-fieldset" required>
-            <!-- <legend>Selecione seu gênero<span class="asterisk">*</span></legend> -->
 
-            <label for="developer">
-                <input type="radio" id="developer" name="occupation-option" value="developer"/>
-                <span>Desenvolvedor</span>
-            </label>
-            
-            <label for="data-scientist">
-                <input type="radio" id="data-scientist" name="occupation-option" value="data-scientist"/>
-                <span>Cientista de Dados</span>
-            </label>
-            
-            <label for="production-engineer">
-                <input type="radio" id="production-engineer" name="occupation-option" value="production-engineer"/>
-                <span>Engenheiro de Produção</span>
-            </label>
-            
-            <label for="marketing">
-                <input type="radio" id="marketing" name="occupation-option" value="marketing"/>
-                <span>Marketing</span>
-            </label>
-            
-            <label for="apprentice">
-                <input type="radio" id="apprentice" name="occupation-option" value="apprentice"/>
-                <span>Aprendiz</span>
-            </label>
-        </fieldset>
 
-        <div class="profile-field">
-            <label class="field-line" for="name">Nome<span class="asterisk">*</span>
-                <input type="text" id="name" name="name"/>
-            </label>
+        <fieldset class="profile-field">
+            <div class="field-line name-fields">
+
+                <label class="name" for="name">
+                    <p>Nome<span class="asterisk">*</span></p>
+                    <input type="text" id="name" name="name" autocomplete="given-name"/>
+                </label>
+
+                <label class="surname" for="surname">
+                    <p>Sobrenome<span class="asterisk">*</span></p>
+                    <input type="text" id="surname" name="surname" autocomplete="family-name"/>
+                </label>
+            </div>
             
-            <label class="field-line" for="email">E-mail<span class="asterisk">*</span>
-                <input type="email" id="email" name="email"/>
-            </label>
+        <label class="field-line email" for="email">
+            <p>E-mail<span class="asterisk">*</span></p>
+            <input type="email" id="email" name="email" autocomplete="email"/>
+        </label>
             
+
             <div class="field-line tel-fields">
                 <label for="primaryPhone">
                     <p>Telefone<span class="asterisk">*</span></p>
-                    <input type="tel" id="primaryPhone" name="primaryPhone"/>
+                    <input type="tel" id="primaryPhone" name="primaryPhone" autocomplete="tel"/>
                 </label>
                 
                 <label for="secondaryPhone">
                     <p>2º Telefone</p>
-                    <input type="tel" id="secondaryPhone" name="secondaryPhone"/>
+                    <input type="tel" id="secondaryPhone" name="secondaryPhone" autocomplete="tel"/>
                 </label>
             </div>
             
             <div class="field-line date-fields">
                 <label for="dateOfBirth">
                     <p>Nascido em<span class="asterisk">*</span></p>
-                    <input type="date" id="dateOfBirth" name="dateOfBirth"/>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" autocomplete="bday"/>
                 </label>
                 
                 <label for="yearOfConclusion">
@@ -73,16 +59,30 @@
                 </label>
             </div>
             
-            <label class="field-line" for="college">Faculdade cursada<span class="asterisk">*</span>
+            <label for="occupation" class="field-line cars">
+                <p>Selecione uma vaga<span class="asterisk">*</span></p>
+                <select name="occupation" id="occupation" autocomplete="off">
+                    <option value="">Selecione uma opção</option>
+                    <option value="developer">Desenvolvedor</option>
+                    <option value="data-scientist">Cientista de Dados</option>
+                    <option value="production-engineer">Engenheiro de Produção</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="apprentice">Aprendiz</option>
+                </select>
+            </label>
+                
+            <label class="field-line college" for="college">
+                <p>Faculdade cursada<span class="asterisk">*</span></p>
                 <input type="text" id="college" name="college"/>
             </label>
             
-            <label class="field-line resume" for="resume">Currículo (PDF)<span class="asterisk">*</span>
+            <label class="field-line resume" for="resume">
+                <p>Currículo (PDF)<span class="asterisk">*</span></p>
                 <input type="file" id="resume" name="resume"/>
             </label>
-
             <button type="submit">Enviar</button>
-        </div>
+            
+        </fieldset>
     </form>
     <div class="background-overlay"></div>
 
@@ -91,7 +91,6 @@
     document.querySelector('form').addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        // const form = e.target;
         const formData = new FormData(event.target);
 
         try {
@@ -119,50 +118,24 @@
 
     function displayErrors(errors) {
         // Remove all existing error messages
-        document.querySelectorAll('.error-field').forEach(error => error.remove());
+        document.querySelectorAll('.error-message').forEach(error => error.remove());
         console.log(errors);
         errors.forEach(error => {
             const field = document.querySelector(`label[for="${error.field}"]`);
+
             if (field) {
                 console.log(field);
-                let errorMessage = field.closest('.input-group')?.querySelector('.error-field');
-                errorMessage = field.querySelector('.error-field');
+                let errorMessage = field.querySelector('.error-field');
                 
-                // If no existing error message, create one
-                if (!errorMessage) {
-                    errorMessage = document.createElement('div');-
-                    errorMessage.classList.add('error-message');
-                    errorMessage.style.color = 'red';
-                    errorMessage.style.marginTop = '0';
-                    // field.appendChild(document.createElement('div')).textContent = error.message;
+                
+                errorMessage = document.createElement('div');
+                errorMessage.classList.add('error-message');
+                    
 
-                    // 🟢 Handle radio buttons (append error to the fieldset)
-                    if (field.type === 'radio') {
-                        const fieldset = field.querySelector('fieldset');
-                        if (fieldset) {
-                            fieldset.appendChild(errorMessage);
-                        }
-                    } 
-                    // 🟢 Handle phone fields (append inside .tel-field div)
-                    else if (field.type === 'tel') {
-                        const telField = field.closest('.tel-field');
-                        if (telField) {
-                            telField.appendChild(errorMessage);
-                        }
-                    } 
-                    // 🟢 Handle file inputs (append below the file input)
-                    else if (field.type === 'file') {
-                        field.insertBefore(errorMessage, field.querySelector('input'));
-                        field.appendChild(errorMessage);
-                    } 
-                    // 🟢 Default case (text, email, date, etc.)
-                    else {
-                        field.querySelector('input').insertAdjacentElement('afterend', errorMessage);
-                        // field.insertBefore(errorMessage, field.querySelector('input'));
-                        //parentNode.insertBefore(errorMessage, field.nextSibling);
-                    }
-                }
-
+                const inputField = field.querySelector('input, textarea, select');
+                
+                inputField.parentNode.appendChild(errorMessage);
+            
                 errorMessage.textContent = `- ${error.message}`; // Update message text
             }
         });
@@ -170,12 +143,13 @@
 
 </script>
 <style>
+
     .error-message {
         font-size: 0.8em;
         color: red;
-        margin-top: 5px;
+        margin-top: 0;
         font-weight: bold;
-        
+        width: 100%;
     }
 
 </style>

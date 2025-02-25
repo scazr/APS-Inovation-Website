@@ -11,8 +11,8 @@ body {
     height: 100vh;
     width: 100vw;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: center;
+    align-items: center;
 }
 
 .background-overlay {
@@ -27,110 +27,12 @@ form {
     width: 1000px;
 }
 
-form .occupation-fieldset {
-    align-items: stretch;
-    margin: 0;
-    margin-bottom: 10px;
-    gap: 10px;
-    padding: 0;
-    border: none;
-    display: flex;
-    justify-content: center;
-}
-    
-/* Custom radio button styles */
-form .occupation-fieldset label {
-    font-size: 18px;
-    cursor: pointer;
-    max-width: 200px;
-    height: 70px;
-}
-    
-form .occupation-fieldset label input[type="radio"] {
-    display: none; /* Hide the default radio button */
-}
 
-form .occupation-fieldset label span {
-    text-align: center;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 4px; /* Makes the square edges slightly rounded */
-    transition: all 0.2s ease;
-    cursor: pointer;
-    padding: 10px;
-
-    max-width: 160px;
-    box-sizing: border-box;
-    height: 100%;
-    display: flex;
-    align-items: center;    
-}
-
-form .occupation-fieldset label input[type="radio"]:checked + span {
-    background-color: #4caf50; /* Green background for selected radio */
-    border-color: rgba(0, 134, 57, 1); /* Match the border color */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6); /* Subtle glow effect */
-}
-
-form .occupation-fieldset label span:hover {
-    background-color: #e0e0e0;
-}
-
-
-form .profile-field {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
-}
-
-form .profile-field .field-line {
-    margin-bottom: 20px;
-}
 
 form label {
     font-weight: bold;
     color: #444;
     display: block;
-}
-
-form .profile-field p {
-    margin: 0
-}
-
-form .profile-field input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-form .profile-field .tel-fields,
-form .profile-field .date-fields {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-form .profile-field .date-fields {
-    display: flex;
-    justify-content: space-between;
-}
-
-form input[type="tel"],
-form input[type="date"] {
-    width: 18ch;
-}
-
-form input[type="file"] {
-    padding: 5px;
 }
 
 

@@ -1,0 +1,82 @@
+/* Profile fieldset style */
+form .profile-field {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-width: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form .profile-field .field-line {
+    margin-bottom: 20px;
+}
+
+form .profile-field p {
+    margin: 0
+}
+
+form .profile-field input,
+form .profile-field select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form .profile-field .name-fields,
+form .profile-field .tel-fields,
+form .profile-field .date-fields {
+    
+    display: flex;
+    justify-content: space-between;
+    /* align-items: top; */
+    /* width: 100%; */
+}
+
+form .profile-field label[for="secondaryPhone"] input
+/* , */
+/* form .profile-field label[for="secondaryPhone"] p  */
+{
+    /* background-color: #4caf50; */
+    display: flex;
+    margin-left: auto;
+}
+
+form .profile-field label[for="secondaryPhone"] p {
+    /* text-align: right; */
+    /* display: flex; */
+    /* margin-left: auto; */
+    text-align: right;
+    width: 100%;
+}
+
+form .profile-field .name-fields input[type="text"] {
+    /* width: 31ch; */
+    width: 10ch;
+    /* width: 70%; */
+    /* max-width: 70%; */
+    display: flex;
+    /* margin-left: auto; */
+}
+
+form .profile-field label[for="surname"]{
+    /* text-align: right; */
+    margin-left: auto;
+    text-align: right;
+    /* width: fit-content; */
+}
+
+form .profile-field input[type="tel"],
+form .profile-field input[type="date"] {
+    width: 18ch;
+}
+
+form .profile-field input[type="file"] {
+    padding: 5px;
+}
