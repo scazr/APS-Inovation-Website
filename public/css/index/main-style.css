@@ -1,0 +1,45 @@
+/* Custom font setup */
+@font-face {
+    font-family: Montserrat;
+    src: url('fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
+/* Custom scrollbar setup */
+body {
+  --sb-track-color: #fafafa;
+  --sb-thumb-color: #b9b9b9;
+  --sb-size: 12px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 15px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 15px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
+}
+
+/* Body and global styling */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 475;
+    color: #003159;
+    line-height: 1.5;
+}

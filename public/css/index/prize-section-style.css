@@ -1,0 +1,92 @@
+.prize-section {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 80px 5% 150px 5%;
+    text-align: center;
+    background-color: #003159;
+    color: white;
+}
+
+.prize-section-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin: 0 0 120px 0;
+    color: white;
+}
+
+.prize-container-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 30px;
+}
+
+.prize-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex: 1 1 620px;
+    gap: 30px;
+    text-align: left;
+    max-width: 850px;
+}
+
+.prize-text {
+    width: auto;
+}
+
+.prize-year {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.prize-divider {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+.prize-title {
+    font-size: 2.1rem;
+    margin: 0 0 10px 0;
+}
+
+.prize-description {
+    display: flex;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.prize-image {
+    max-width: 320px;
+}
+
+@media (max-width: 800px) {
+    .prize-section-title {
+        font-size: 3rem;
+        margin: 0 0 60px 0;
+    }
+
+    .prize-container-group {
+        gap: 70px;
+    }
+
+    .prize-container {
+        flex-wrap: wrap;
+        text-align: center;
+        gap: 0;
+    }
+
+    .prize-text {
+        width: 100%;
+    }
+
+    .prize-image {
+        margin: 0 auto;
+    }
+}

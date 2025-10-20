@@ -1,0 +1,112 @@
+form {
+    /* display: block; */
+}
+
+form .profile-field {
+    margin: 0;
+    border-style: none;
+    border: 0;
+    padding: 0;
+    display: contents;
+}
+
+/* Field label style */
+form .profile-field p {
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* Fallback for older browsers */
+    margin: 0;
+    max-width: 100%;
+    flex: 0;
+}
+form .profile-field .field-line p {
+}
+
+form .profile-field .field-line {
+    margin-bottom: 10px;
+}
+
+form .profile-field input,
+form .profile-field select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form .profile-field input:focus {
+    border-color: rgba(0, 134, 57, 1);
+    border-width: 2px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 134, 57, 1) /* rgba(0, 123, 255, 0.5); */
+}
+
+form .profile-field .name-fields,
+form .profile-field .tel-fields,
+form .profile-field .date-fields {    
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+
+form .profile-field label .error-message {
+    text-wrap-mode: wrap;
+}
+
+form .profile-field label[for="name"] {
+    margin-right: auto;
+    width: 30ch;
+    max-width: 30ch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form .profile-field label[for="surname"],
+form .profile-field label[for="secondaryPhone"],
+form .profile-field label[for="yearOfConclusion"] {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+form .profile-field label[for="surname"] {
+    width: 30ch;
+    max-width: 30ch;
+}
+
+form .profile-field label[for="primaryPhone"],
+form .profile-field label[for="secondaryPhone"],
+form .profile-field label[for="dateOfBirth"],
+form .profile-field label[for="yearOfConclusion"] {
+    width: 18ch;
+    max-width: 18ch;
+}
+
+form .profile-field label[type="tel"],
+form .profile-field label[type="date"] {
+    width: 100%;
+}
+
+form .profile-field label[for="surname"] p,
+form .profile-field label[for="secondaryPhone"] p,
+form .profile-field label[for="yearOfConclusion"] p {
+    text-align: right;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* Fallback for older browsers */
+    margin: 0;
+    white-space: normal;
+}
+
+form .profile-field .name-fields input[type="text"] {
+    width: 100%;
+}
+
+
+form .profile-field input[type="file"] {
+    padding: 5px;
+}

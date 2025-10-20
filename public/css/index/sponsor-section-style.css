@@ -1,0 +1,93 @@
+.sponsor-section {
+    background-color: #ffff;
+    padding: 0 calc(7vw);
+    text-align: center;
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+}
+
+.sponsor-title {
+    background-color: #003159;
+    font-size: 4rem;
+    color: white;
+    margin: 80px auto;
+    text-align: center;
+    font-weight: 800;
+    display: inline-block;
+    border-radius: 100px;
+    padding: 0 1ch;
+}
+
+.sponsor-containers {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    row-gap: 50px;
+    margin-bottom: 60px;
+}
+
+.container-content {
+    width: 27%;
+    text-align: left;
+    background: #E6E6E6;
+    padding: 35px;
+    border-radius: 30px;
+    position: relative;
+
+    flex: 0 1 410px;
+}
+
+.container-title {
+    font-size: 3rem;
+    color: #003159;
+    font-weight: 800;
+    margin: 0;
+}
+
+.container-image {
+    width: 25%;
+    position: absolute;
+    top: -40px;
+    right: 10px;
+}
+
+
+.container-text {
+    font-size: 1.3rem;
+    margin: 0;
+    text-align: left;
+}
+
+.sponsor-button {
+    background-color: transparent;
+    border: 5px solid #003159;
+    border-radius: 1000px;
+    color: #003159;
+    cursor: pointer;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 auto 90px auto;
+    padding: 5px 2ch;
+    transition: 0.3s;
+}
+
+.sponsor-button:hover {
+    background: #003159;
+    color: white;
+}
+
+@media (max-width: 800px) {
+    .sponsor-title {
+        font-size: 2.4rem;
+    }
+    
+    .container-title {
+        font-size: 2.2rem;
+    }
+
+    .sponsor-button {
+        font-size: 2.4rem;
+    }
+}

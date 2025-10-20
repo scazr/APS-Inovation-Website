@@ -1,0 +1,73 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: url("./placeholderBackgroundForm.png") no-repeat center center/cover;
+    background-color: #f4f4f9;
+    color: #333;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-overlay {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
+form {
+    /* width: 1000px; */
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-width: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    color: #444;
+    display: block;
+}
+
+
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(0, 134, 57, 1);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form fieldset button:hover {
+    background-color: rgba(0, 104, 27, 1);
+}
+
+
+/* Mobile Responsiveness */
+/* @media (max-width: 600px) {
+    form {
+        padding: 15px;
+    }
+    form label,
+    form input, form button {
+        font-size: 14px;
+    }
+} */
